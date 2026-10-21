@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FunctionLab — Mini Compiler</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#"><span class="brand-mark">ƒ</span><span>Function<span class="muted">Lab</span></span></a>
+      <nav><a class="active" href="#workspace">Compiler</a><a href="#how">How it works</a><a href="#grammar">Grammar</a>
+      </nav>
+      <span class="course-pill">Compiler Design · Mini Project</span>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="eyebrow"><span class="dot"></span> FRONT-END PLAYGROUND</div>
+        <h1>Write a function.<br><span>See how a compiler thinks.</span></h1>
+        <p>A clean, interactive demo of lexical analysis, syntax parsing, and basic semantic checks for a tiny C-like
+          function language.</p>
+        <div class="hero-actions"><a class="button primary" href="#workspace">Open playground <span>↘</span></a><a
+            class="text-link" href="#how">Explore the pipeline →</a></div>
+      </section>
+      <section class="workspace" id="workspace">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">LIVE WORKSPACE</div>
+            <h2>Function playground</h2>
+          </div>
+          <div class="status" id="status"><span></span> Ready to compile</div>
+        </div>
+        <div class="work-grid">
+          <div class="editor-card">
+            <div class="card-top">
+              <div class="window-dots"><i></i><i></i><i></i></div><span>main.c</span><button id="resetBtn"
+                class="ghost">Reset example ↺</button>
+            </div>
+            <div class="editor-wrap">
+              <div class="line-numbers" id="lineNumbers">1<br>2<br>3<br>4<br>5</div><textarea id="source"
+                spellcheck="false" aria-label="Function source code">int add(int a, int b) {
+    return a + b;
+}
+
+float half(float value) {
+    return value / 2;
+}</textarea>
+            </div>
+            <div class="editor-bottom"><span><span class="green-dot"></span> C-like syntax</span><button id="compileBtn"
+                class="button primary">Compile source <span>→</span></button></div>
+          </div>
+          <div class="output-card">
+            <div class="card-top"><span>COMPILATION REPORT</span><span class="live-tag">LIVE DEMO</span></div>
+            <div class="pipeline">
+              <div class="pipe-step active"><span class="pipe-icon">01</span>
+                <div><b>Lexical analysis</b><small>Characters → tokens</small></div><span class="step-state"
+                  id="lexState">Ready</span>
+              </div>
+              <div class="pipe-line"></div>
+              <div class="pipe-step"><span class="pipe-icon">02</span>
+                <div><b>Syntax analysis</b><small>Tokens → function structure</small></div><span class="step-state"
+                  id="parseState">Ready</span>
+              </div>
+              <div class="pipe-line"></div>
+              <div class="pipe-step"><span class="pipe-icon">03</span>
+                <div><b>Semantic checks</b><small>Names and return rules</small></div><span class="step-state"
+                  id="semanticState">Ready</span>
+              </div>
+            </div>
+            <div class="report" id="report">
+              <div class="report-icon">✦</div><b>Your report will appear here</b>
+              <p>Press “Compile source” to inspect the example.</p>
+            </div>
+          </div>
+        </div>
+        <div class="results-grid">
+          <article class="result-card">
+            <div class="result-head">
+              <div><span class="mini-label">OUTPUT 01</span>
+                <h3>Token stream</h3>
+              </div><span class="count" id="tokenCount">0 tokens</span>
+            </div>
+            <div class="token-list" id="tokens">
+              <p class="empty">Compile your source to list tokens.</p>
+            </div>
+          </article>
+          <article class="result-card">
+            <div class="result-head">
+              <div><span class="mini-label">OUTPUT 02</span>
+                <h3>Function outline</h3>
+              </div><span class="count" id="functionCount">0 functions</span>
+            </div>
+            <div id="functions" class="function-list">
+              <p class="empty">Parsed function summaries appear here.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section class="how" id="how">
+        <div class="eyebrow">THE PIPELINE</div>
+        <h2>Three stages. One clear result.</h2>
+        <div class="stage-grid">
+          <article><span class="stage-number">01</span>
+            <h3>Lexer</h3>
+            <p>Reads the source character by character and groups it into keywords, identifiers, numbers, and symbols.
+            </p><span class="stage-foot">CHARACTERS → TOKENS</span>
+          </article>
+          <article><span class="stage-number">02</span>
+            <h3>Parser</h3>
+            <p>Checks whether tokens follow the function-definition grammar: return type, name, parameters, and body.
+            </p><span class="stage-foot">TOKENS → STRUCTURE</span>
+          </article>
+          <article><span class="stage-number">03</span>
+            <h3>Semantic analyzer</h3>
+            <p>Checks simple rules such as duplicate function names, duplicate parameters, and undeclared names in
+              return expressions.</p><span class="stage-foot">STRUCTURE → CHECKS</span>
+          </article>
+        </div>
+      </section>
+      <section class="grammar" id="grammar">
+        <div>
+          <div class="eyebrow">SUPPORTED GRAMMAR</div>
+          <h2>A deliberately small language.</h2>
+          <p>This teaching demo supports function definitions, typed parameters, variable declarations, and return
+            statements. It is not a full C compiler.</p>
+        </div>
+        <pre><code>Function   → Type ID "(" Parameters ")" Block
+Type       → "int" | "float" | "void"
+Parameters → Parameter ("," Parameter)* | ε
+Parameter  → Type ID
+Block      → "{" Statement* "}"
+Statement  → "return" Expression ";"
+           | "return" ";"
+           | Type ID ";"
+Expression → Primary (("+"|"-"|"*"|"/") Primary)*
+Primary    → ID | NUMBER | "(" Expression ")"</code></pre>
+      </section>
+      <footer><a class="brand" href="#"><span class="brand-mark">ƒ</span><span>Function<span
+              class="muted">Lab</span></span></a><span>Compiler Design · Function Definition Compiler</span><span>Built
+          for learning, not production C.</span></footer>
+    </main>
+    <script src="app.js"></script>
+  </body>
+
+</html>
