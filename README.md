@@ -1,5 +1,4 @@
 # Function Definition Compiler
-
 A mini compiler front-end for a small C-like language. Includes a C command-line implementation (lexer, parser, AST structures, semantic checks) and a minimal responsive browser demo.
 https://mariamskaria.github.io/Function-Definition-Compiler/
 
